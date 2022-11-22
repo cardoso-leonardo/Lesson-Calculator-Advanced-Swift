@@ -24,32 +24,29 @@ class ViewController: UIViewController {
         }
     }
     
+    private var calculator = CalculatorLogic()
+    
     @IBAction func calcButtonPressed(_ sender: UIButton) {
         
         //What should happen when a non-number button is pressed
+        isFinishedTypingNumber = true
         
+        calculator.setNumber(displayValue)
         
-        
-        if let button = sender.currentTitle {
-            switch button {
-            case "+/-":
-                displayValue *= -1
-            case "%":
-                displayValue *= 0.01
-            case "AC":
-                displayValue = 0
-            default:
-                displayLabel.text = String(displayValue)
+        if let symbol = sender.currentTitle {
+            
+            
+            if let result = calculator.calcFunctions(symbol: symbol) {
+                displayValue = result
             }
         }
-        
-        isFinishedTypingNumber = true
     }
     
     
     @IBAction func numButtonPressed(_ sender: UIButton) {
         
         if let numValue = sender.currentTitle {
+            
             if isFinishedTypingNumber {
                 displayLabel.text = numValue
                 isFinishedTypingNumber = false
